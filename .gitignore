@@ -1,0 +1,17 @@
+output/
+wandb/
+output
+wandb
+__pycache__/
+github/
+logic_output/*
+data/knowledge/
+.vscode/
+ana/
+log/
+logic_extrac/
+sweep/
+bash/
+.DS_Store
+data/MIRAGE/
+*.tar.gz

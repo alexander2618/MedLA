@@ -1,0 +1,17 @@
+joblib==1.4.2
+jsonlines==4.0.0
+langchain==0.3.25
+loguru==0.7.3
+matplotlib==3.10.3
+networkx==3.4.2
+numpy==2.2.6
+openai==1.79.0
+pandas==2.2.3
+Requests==2.32.3
+scikit_learn==1.6.1
+termcolor==3.1.0
+tqdm==4.65.0
+loguru
+wandb
+python-dotenv
+zhipuai
