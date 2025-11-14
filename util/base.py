@@ -6,9 +6,9 @@ import os
 from tqdm import tqdm
 
 
-from .rag import QAEmbeddingNewDB
+from .rag import QADB
 from .load_data import create_question
-from .load_data import load_data_medqa, load_data_medqa_us, load_data_pubmedqa, load_data_mmlu, load_data_bioasq, load_data_medddx
+from .load_data import load_data_medqa_us, load_data_mmlu, load_data_bioasq, load_data_medddx
 
 
 class base:
@@ -16,9 +16,8 @@ class base:
         self.args = args
         self.phase = phase
         self.acc = None
-        self.qDB = QAEmbeddingNewDB(
+        self.qDB = QADB(
             db_size=args.db_size,
-            model=args.rag,
         )
         self.wandb_logger = wandb_logger
         logger.info(str(self.args))
@@ -26,15 +25,10 @@ class base:
         self.preprocess()
 
     def preprocess(self):
-        if self.args.dataset == "sub" or self.args.dataset == "medqa" or self.args.dataset == 'subzl':
-            test_qa, examplers = load_data_medqa(self.phase, self.args.seed)
-
-        elif self.args.dataset == "medqa_us":
+        
+        if self.args.dataset == "medqa_us":
             test_qa, examplers = load_data_medqa_us()
         
-        elif self.args.dataset == "pubmedqa":
-            test_qa, examplers = load_data_pubmedqa()
-
         elif self.args.dataset == "mmlu":
             test_qa, examplers = load_data_mmlu()
 
@@ -78,7 +72,7 @@ class base:
         few_shot_exp_list = []
         for idx in range(len(self.dataset)):
             question, options = create_question(self.dataset[idx], self.args.dataset)
-            get_few_shot_data = self.qDB.get_few_shot(question, self.args.few_shots, self.args.num_agents)
+            get_few_shot_data = self.qDB.get_few_shot(self.args.few_shots, self.args.num_agents)
             question_list.append([question, options])
             few_shot_exp_list.append(get_few_shot_data)
         

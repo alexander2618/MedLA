@@ -247,39 +247,27 @@ def get_args():
     parser.add_argument(
         "--model",
         type=str,
-        default="vllm",
+        default="deepseek",
         choices=[
             "vllm",
-            "OLLAMA",
             "siliconflow",
-            "gpt-3.5",
-            "gpt-4",
-            "gpt-4o",
-            "gpt-4o-mini",
-            "gpt-4o-2024-11-20",
-            "gpt-4o-mini-2024-07-18",
-            "o3-mini",
-            "glm-4-plus",
-            "glm-4-flash",
-            "deepseek-reasoner",
-            "deepseek-chat",
-            "deepseek-r1",
+            "openai",
+            "deepseek",
+            "zhipuai",
         ],
     )
     parser.add_argument(
         "--llm_name",
         type=str,
-        default="CAIRI-LLM",
+        default="deepseek-chat",
         choices=[
-            "CAIRI-LLM",
-            "CAIRI-LLM-reasoner",
-            "CAIRI-VLM",
             "deepseek-ai/DeepSeek-V3",
             "deepseek-ai/DeepSeek-R1",
             "qwq10k",
             "gpt-4o-mini-2024-07-18",
             "deepseek-chat",
             "deepseek-reasoner",
+            "gpt-4o-2024-08-06",
             "gpt-4o-2024-11-20",
             "DSR1_10k70b",
             "llama3370B13K",
@@ -289,34 +277,41 @@ def get_args():
             "llama3.3_4096",
             "DS-r1:70b",
             "qwen2.5:72b_6000",
-            "DS-r1:70b",
             "llama3.3",
         ],
     )
+    parser.add_argument("--url", type=int, default=None)
+    
     parser.add_argument("--few_shots", type=int, default=1)
     parser.add_argument("--knowledges", type=int, default=0)
     parser.add_argument("--db_size", type=int, default=100)
     parser.add_argument("--num_agents", type=int, default=17)
     parser.add_argument("--num_rounds", type=int, default=3)
+    parser.add_argument("--num_times", type=int, default=1)
     parser.add_argument("--temp", type=float, default=0.7)
 
-    parser.add_argument("--num_times", type=int, default=1)
-    parser.add_argument("--rag", type=str, default=None, choices=["nomic-embed-text", "mxbai-embed-large"])
     parser.add_argument("--seed", type=str, default="42")
-    parser.add_argument("--baseline_bool", type=bool, default=False)
-
-    parser.add_argument("--url", type=str, default="http://127.0.0.1:7777")
+    parser.add_argument("--baseline_bool", type=int, default=0, choices=[1, 0])
     parser.add_argument("--num_samples", type=int, default=-1)
-    parser.add_argument("--num_threads", type=int, default=24)
+    parser.add_argument("--num_threads", type=int, default=10)
     parser.add_argument(
         "--tag", type=str, default="recover"
     )
-    parser.add_argument("--debug", action="store_true")
-    parser.add_argument("--wandb", type=int, default=os.environ.get("ADAMA_PORT", "Adama"))
     
+    parser.add_argument("--log", type=str, default=None)
+    parser.add_argument("--debug", action="store_true")
     args = parser.parse_args()
-
+    
     args.num_threads = int(os.environ.get("ADAMA_NUM_THREADS", args.num_threads))
+    
+    if args.model == "vllm":
+        if os.environ.get("ADAMA_PORT", args.url) is None:
+            raise ValueError("Please set ADAMA_PORT environment variable or pass --url argument for vllm model.")
+        else:
+            try:
+                args.url = f"http://127.0.0.1:{int(os.environ.get("ADAMA_PORT"))}"
+            except:
+                args.url = os.environ.get("ADAMA_PORT")
 
     if args.debug:
         args.num_samples = 1
