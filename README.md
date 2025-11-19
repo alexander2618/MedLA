@@ -1,5 +1,5 @@
 
-# Adama: A Multi-Agent Framework for Knowledge-Intensive Medical Reasoning (AAAI 2026 Oral)
+# MedLA: A Multi-Agent Framework for Knowledge-Intensive Medical Reasoning (AAAI 2026 Oral)
 
 Adama is a research and engineering framework for multi-agent collaborative reasoning on knowledge-intensive medical and biomedical question answering tasks. It supports datasets such as MedQA, PubMedQA, MMLU medical subsets, MedDdx differential diagnosis style data, BioASQ-like recall tasks, and internal knowledge-grounded cases. This repository accompanies the AAAI 2026 oral paper introducing a scalable agent architecture that integrates logical critique, iterative elimination, and arbitration to improve reliability on difficult clinical and biomedical questions.
 
