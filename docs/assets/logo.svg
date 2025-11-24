@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="180" height="28" viewBox="0 0 180 28" fill="none">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="180" y2="28" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#66E3C4"/>
+      <stop offset="1" stop-color="#4CB4FF"/>
+    </linearGradient>
+  </defs>
+  <rect x="0.5" y="0.5" width="179" height="27" rx="6" fill="transparent"/>
+  <text x="12" y="19" font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell, 'Noto Sans', sans-serif" font-size="16" font-weight="700" fill="url(#g)">MedLA</text>
+  <circle cx="168" cy="14" r="3" fill="url(#g)" opacity="0.9"/>
+</svg>

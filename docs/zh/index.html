@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MedLA | 多智能体医学推理框架</title>
+    <meta name="description" content="MedLA: 面向知识密集型医学问答的多智能体协作推理框架 (AAAI 2026 Oral)">
+    <link rel="canonical" href="../" />
+    <link rel="alternate" href="../" hreflang="en" />
+    <meta property="og:title" content="MedLA | 多智能体医学推理框架" />
+    <meta property="og:description" content="多专科 Agent + 逻辑批判 + 仲裁，提升复杂医学问答的可靠性。" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="../assets/logo.svg" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <img src="../assets/logo.svg" alt="MedLA" height="20" />
+          <span class="tag">AAAI 2026 Oral</span>
+        </div>
+        <nav class="nav">
+          <a href="#overview">概览</a>
+          <a href="#features">特性</a>
+          <a href="#install">安装</a>
+          <a href="#usage">示例</a>
+          <a href="#args">参数</a>
+          <a href="#arch">架构</a>
+          <a href="#results">结果</a>
+          <a href="#citation">引用</a>
+          <a href="#deploy">部署</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="overview" class="hero">
+        <div class="container">
+          <h1>MedLA: 多智能体医学推理框架</h1>
+          <p class="subtitle">面向 MedQA、PubMedQA、MMLU 医学、MedDdx、BioASQ 等任务的可扩展协作与仲裁架构。</p>
+          <div class="cta">
+            <a class="btn primary" href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn" href="#usage">快速开始</a>
+          </div>
+          <p class="note">核心思想：专科智能体并行作答 + LogicAgent 逻辑评估 + DecisionMakersAgent 仲裁 → 更稳健的最终答案。</p>
+          <p class="note"><a href="../" style="color:inherit;text-decoration:underline">English</a></p>
+        </div>
+      </section>
+
+      <section id="features" class="section">
+        <div class="container">
+          <h2>关键特性</h2>
+          <ul class="grid two">
+            <li><b>可配置多智能体讨论</b>：<code>--num_agents</code> / <code>--num_rounds</code></li>
+            <li><b>逻辑质量层</b>：<code>LogicAgent</code> 生成结构化逻辑报告</li>
+            <li><b>仲裁层</b>：<code>DecisionMakersAgent</code> 统一冲突候选</li>
+            <li><b>单模基线</b>：<code>--baseline_bool 1</code></li>
+            <li><b>多数据集</b>：<code>medqa / medxpert / mmlu / pubmedqa / bioasq / medddx</code></li>
+            <li><b>多后端</b>：OpenAI、DeepSeek、vLLM、ZhipuAI、SiliconFlow</li>
+            <li><b>实验追踪</b>：WandB 指标与诊断</li>
+            <li><b>并行/服务化</b>：线程池 + 环境变量配置</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="layout" class="section alt">
+        <div class="container">
+          <h2>仓库结构</h2>
+          <pre class="code"><code>adam_baseline/              # 单智能体基线与分析
+adama_main_new_prompt/     # 多智能体实验主线
+  main.py                  # 入口（基线 + 多智能体）
+  util/                    # Agent/Prompt/编排
+  sweep/                   # 参数扫描配置
+  data/                    # 数据与知识库
+adama_main_publish/        # 精简发布（本项目）
+docs/                      # 项目页面（当前）
+output/, logic_output/, logic_extrac/  # 运行产物与诊断
+          </code></pre>
+        </div>
+      </section>
+
+      <section id="install" class="section">
+        <div class="container">
+          <h2>安装</h2>
+          <pre class="code"><code class="language-bash">git clone https://github.com/alexander2618/MedLA.git MedLA
+cd MedLA
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+pip install -r requirements_environment.txt  # 完全复现（可选）
+
+# 可选本地/服务
+export ADAMA_PORT=8000        # vLLM 端口
+export ADAMA_NUM_THREADS=8    # 覆盖 --num_threads
+          </code></pre>
+        </div>
+      </section>
+
+      <section id="usage" class="section">
+        <div class="container">
+          <h2>使用示例</h2>
+          <h3>多智能体协作</h3>
+          <pre class="code"><code class="language-bash">python main.py \
+  --dataset medqa \
+  --model deepseek \
+  --llm_name deepseek-chat \
+  --num_agents 8 \
+  --num_rounds 3 \
+  --few_shots 1 \
+  --tag exp_medqa_v1
+          </code></pre>
+          <h3>单智能体基线</h3>
+          <pre class="code"><code class="language-bash">python main.py --dataset medqa --model deepseek --llm_name deepseek-chat \
+  --baseline_bool 1 --tag baseline_v1
+          </code></pre>
+          <h3>vLLM 后端</h3>
+          <pre class="code"><code class="language-bash">export ADAMA_PORT=8000
+python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_test
+          </code></pre>
+          <p class="note">常用扫描：
+            <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">sweep/</a>
+          </p>
+        </div>
+      </section>
+
+      <section id="args" class="section alt">
+        <div class="container">
+          <h2>主要参数</h2>
+          <div class="cols two">
+            <ul>
+              <li><code>--dataset</code>：数据集</li>
+              <li><code>--model</code>：后端</li>
+              <li><code>--llm_name</code>：模型名</li>
+              <li><code>--num_agents</code>：智能体数</li>
+              <li><code>--num_rounds</code>：讨论轮数</li>
+            </ul>
+            <ul>
+              <li><code>--baseline_bool</code>：1 基线 / 0 多智能体</li>
+              <li><code>--num_samples</code>：样本上限</li>
+              <li><code>--num_threads</code>：并行度</li>
+              <li><code>--temp</code>：温度</li>
+              <li><code>--tag</code> / <code>--debug</code></li>
+            </ul>
+          </div>
+          <p class="note">环境变量：<code>ADAMA_PORT</code>、<code>ADAMA_NUM_THREADS</code></p>
+        </div>
+      </section>
+
+      <section id="arch" class="section">
+        <div class="container">
+          <h2>架构概览</h2>
+          <ol>
+            <li>初始化 <b>LogicAgent</b> 与 N 个 <b>MedAgent_Eliminate</b></li>
+            <li>独立生成答案与推理链</li>
+            <li><b>LogicAgent</b> 评估一致性并生成 <code>logic_report</code></li>
+            <li>若分歧，进入消歧/精化轮次</li>
+            <li>仍冲突则由 <b>DecisionMakersAgent</b> 仲裁</li>
+            <li>指标记录并通过 WandB 可视化</li>
+          </ol>
+          <div class="cards">
+            <div class="card"><b>LogicAgent</b><br />逻辑批判与一致性</div>
+            <div class="card"><b>MedAgent_Eliminate</b><br />医学推理 + 自消歧</div>
+            <div class="card"><b>DecisionMakersAgent</b><br />仲裁与综合</div>
+            <div class="card"><b>base (util/base.py)</b><br />数据编排与流水线</div>
+          </div>
+        </div>
+      </section>
+
+      <section id="results" class="section alt">
+        <div class="container">
+          <h2>结果与分析</h2>
+          <p>产出位于 <code>output/</code>、<code>logic_output/</code>、<code>logic_extrac/</code>；使用 <code>adam_baseline/analysis.py</code> 分析。</p>
+          <h3>WandB 指标</h3>
+          <ul class="grid two">
+            <li><b>accuracy</b>：累计准确率</li>
+            <li><b>talkTimes</b>：讨论轮数</li>
+            <li><b>retry_count / retry_pro</b>：重试情况</li>
+            <li><b>make_decision / make_decision_num</b>：仲裁与比例</li>
+            <li><b>num_right / numn_total</b>：正确/总数</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="citation" class="section">
+        <div class="container">
+          <h2>引用</h2>
+          <pre class="code"><code>@inproceedings{AdamaAAAI2026,
+  title={MedLA: ALogic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models},
+  author={Siqi Ma, Jiajie Huang, Fan Zhang, Jinlin Wu, Yue Shen, Guohui Fan, Zhu Zhang, Zelin Zang},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2026},
+  note={Oral Presentation}
+}
+          </code></pre>
+        </div>
+      </section>
+
+      <section id="links" class="section alt">
+        <div class="container">
+          <h2>更多</h2>
+          <ul>
+            <li><a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">项目仓库</a></li>
+            <li><a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">参数扫描 sweep/</a></li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="deploy" class="section">
+        <div class="container">
+          <h2>部署到 GitHub Pages</h2>
+          <ol>
+            <li>推送仓库到 GitHub</li>
+            <li>Settings → Pages</li>
+            <li>选择分支 <code>main</code> 与目录 <code>/docs</code>，保存</li>
+            <li>等待生效后访问 Pages 链接</li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>© MedLA Team · AAAI 2026 Oral</span>
+        <span class="sep">·</span>
+        <a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">·</span>
+        <a href="../" rel="alternate" hreflang="en">English</a>
+      </div>
+    </footer>
+  </body>
+  </html>

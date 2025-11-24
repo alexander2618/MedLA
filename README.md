@@ -169,10 +169,6 @@ Contributions are welcome via Issues and Pull Requests:
 - Maintain style & directory conventions
 
 ---
-## Project Status
-Active development (multi-agent enhancements in `adama_main_new_prompt/`). For lean usage or reproduction, see `adama_main_publish/`.
-
----
 ## Quick Checklist
 - [ ] Install environment & dependencies
 - [ ] Prepare datasets in `data/`
