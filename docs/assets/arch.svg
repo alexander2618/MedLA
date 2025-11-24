@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" fill="none">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#66E3C4"/>
+      <stop offset="1" stop-color="#4CB4FF"/>
+    </linearGradient>
+    <style>
+      .box{fill:#121521;stroke:#1e2433;stroke-width:2;rx:12}
+      .title{fill:#e7ebf1;font:700 16px system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+      .text{fill:#9aa4b2;font:400 14px system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif}
+      .arrow{stroke:url(#g1);stroke-width:3;marker-end:url(#m) }
+    </style>
+    <marker id="m" markerWidth="10" markerHeight="10" refX="7" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="url(#g1)"/>
+    </marker>
+  </defs>
+
+  <!-- Data -->
+  <rect class="box" x="40" y="40" width="220" height="100"/>
+  <text class="title" x="60" y="75">Datasets & Knowledge</text>
+  <text class="text" x="60" y="100">MedQA · PubMedQA · MMLU · MedDdx · BioASQ</text>
+
+  <!-- Agents -->
+  <rect class="box" x="40" y="200" width="220" height="240"/>
+  <text class="title" x="60" y="235">Specialized Agents</text>
+  <text class="text" x="60" y="260">MedAgent_Eliminate × N</text>
+  <text class="text" x="60" y="285">Few-shot prompting</text>
+  <text class="text" x="60" y="310">Independent reasoning chains</text>
+
+  <!-- LogicAgent -->
+  <rect class="box" x="360" y="120" width="240" height="140"/>
+  <text class="title" x="380" y="155">LogicAgent</text>
+  <text class="text" x="380" y="180">Coherence checks</text>
+  <text class="text" x="380" y="205">Structured logic_report</text>
+
+  <!-- Debate cycles -->
+  <rect class="box" x="360" y="300" width="240" height="140"/>
+  <text class="title" x="380" y="335">Debate Cycles</text>
+  <text class="text" x="380" y="360">Elimination / Refinement</text>
+  <text class="text" x="380" y="385">Rounds: --num_rounds</text>
+
+  <!-- Decision Maker -->
+  <rect class="box" x="700" y="200" width="220" height="140"/>
+  <text class="title" x="720" y="235">DecisionMakersAgent</text>
+  <text class="text" x="720" y="260">Arbitration & Synthesis</text>
+  <text class="text" x="720" y="285">Final Answer</text>
+
+  <!-- Outputs -->
+  <rect class="box" x="700" y="380" width="220" height="100"/>
+  <text class="title" x="720" y="415">Outputs & Metrics</text>
+  <text class="text" x="720" y="440">output/, logic_output/, WandB</text>
+
+  <!-- Arrows -->
+  <path class="arrow" d="M260 90 C 320 90, 320 140, 360 160"/>
+  <path class="arrow" d="M260 260 C 320 260, 320 180, 360 170"/>
+  <path class="arrow" d="M260 260 C 320 260, 320 360, 360 360"/>
+  <path class="arrow" d="M600 190 C 650 210, 650 210, 700 230"/>
+  <path class="arrow" d="M600 360 C 650 330, 650 330, 700 300"/>
+  <path class="arrow" d="M810 340 C 810 360, 810 360, 810 380"/>
+
+  <!-- Legend -->
+  <text class="text" x="40" y="490">Backends: OpenAI · DeepSeek · vLLM · ZhipuAI · SiliconFlow</text>
+  <text class="text" x="40" y="510">Controls: --num_agents, --num_rounds, --baseline_bool</text>
+</svg>

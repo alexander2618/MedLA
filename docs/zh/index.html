@@ -11,6 +11,7 @@
     <meta property="og:description" content="多专科 Agent + 逻辑批判 + 仲裁，提升复杂医学问答的可靠性。" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="../assets/logo.svg" />
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
@@ -163,6 +164,9 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
             <div class="card"><b>MedAgent_Eliminate</b><br />医学推理 + 自消歧</div>
             <div class="card"><b>DecisionMakersAgent</b><br />仲裁与综合</div>
             <div class="card"><b>base (util/base.py)</b><br />数据编排与流水线</div>
+          </div>
+          <div class="diagram" style="margin-top:18px">
+            <img src="../assets/arch.svg" alt="MedLA 架构图" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:12px" />
           </div>
         </div>
       </section>
