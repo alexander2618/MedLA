@@ -2,11 +2,10 @@
 
 <div align="center">
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b.svg)]()
-[![Project Page](https://img.shields.io/badge/Project-Page-blue.svg)]()
+[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b.svg)](https://arxiv.org/abs/2509.23725)
+[![Project Page](https://img.shields.io/badge/Project-Page-blue.svg)](https://alexander2618.github.io/MedLA/)
 [![Code](https://img.shields.io/badge/Code-GitHub-green.svg)](https://github.com/alexander2618/MedLA)
 [![Demo](https://img.shields.io/badge/Demo-HuggingFace-yellow.svg)]()
-[![Video](https://img.shields.io/badge/Video-YouTube-red.svg)]()
 [![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)]()
 
 </div>
