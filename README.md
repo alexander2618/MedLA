@@ -14,7 +14,7 @@
 
 <div align="center">
 
-[Siqi Ma]() · [Jiajie Huang]() · [Fan Zhang]() · [Jinlin Wu]() · [Yue Shen]() · [Guohui Fan]() · [Zhu Zhang]() · [Zelin Zang]()
+[Siqi Ma]() · [Jiajie Huang]() · [Fan Zhang]() · [Jinlin Wu]() · [Yue Shen]() · [Guohui Fan]() · [Zhu Zhang]() · [Zelin Zang](https://zangzelin.github.io/)
 
 </div>
 
