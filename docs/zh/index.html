@@ -29,6 +29,7 @@
           <a href="#args">参数</a>
           <a href="#arch">架构</a>
           <a href="#results">结果</a>
+          <a href="#html-gallery">HTML 样例</a>
           <a href="#citation">引用</a>
           <a href="#deploy">部署</a>
         </nav>
@@ -186,6 +187,29 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
         </div>
       </section>
 
+      <!-- 插入章节：iframe 轮播 -->
+      <section id="html-gallery" class="section">
+        <div class="container">
+          <h2>HTML 样例</h2>
+          <p class="note">使用轮播方式浏览 <code>docs/html/html/</code> 目录下的全部 HTML 页面样例。</p>
+
+          <div class="carousel" data-carousel data-base="../html/html/" data-manifest="../html/html/samples.json">
+            <button class="carousel-btn" type="button" data-prev aria-label="上一页">←</button>
+
+            <div class="carousel-window">
+              <iframe class="carousel-iframe" data-frame title="HTML 样例查看器" loading="lazy"></iframe>
+            </div>
+
+            <button class="carousel-btn" type="button" data-next aria-label="下一页">→</button>
+          </div>
+
+          <div class="carousel-meta">
+            <span class="carousel-counter" data-counter></span>
+            <a class="carousel-open" data-open target="_blank" rel="noopener">新标签页打开</a>
+          </div>
+        </div>
+      </section>
+
       <section id="citation" class="section">
         <div class="container">
           <h2>引用</h2>
@@ -232,5 +256,61 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
         <a href="../" rel="alternate" hreflang="en">English</a>
       </div>
     </footer>
+
+    <script>
+      async function initCarousel(root) {
+        const base = root.getAttribute("data-base");
+        const manifestUrl = root.getAttribute("data-manifest");
+
+        const frame = root.querySelector("[data-frame]");
+        const btnPrev = root.querySelector("[data-prev]");
+        const btnNext = root.querySelector("[data-next]");
+
+        const container = root.closest(".container");
+        const counter = container?.querySelector("[data-counter]");
+        const openLink = container?.querySelector("[data-open]");
+
+        let files = [];
+        try {
+          const res = await fetch(manifestUrl, { cache: "no-store" });
+          files = await res.json();
+        } catch (e) {
+          console.error("Failed to load carousel manifest:", manifestUrl, e);
+          return;
+        }
+        if (!Array.isArray(files) || files.length === 0) return;
+
+        let idx = 0;
+        function render() {
+          const filename = files[idx];
+          const src = base + filename;
+          frame.src = src;
+          if (counter) counter.textContent = `${idx + 1} / ${files.length} — ${filename}`;
+          if (openLink) openLink.href = src;
+          btnPrev.disabled = files.length <= 1;
+          btnNext.disabled = files.length <= 1;
+        }
+        function prev() {
+          idx = (idx - 1 + files.length) % files.length;
+          render();
+        }
+        function next() {
+          idx = (idx + 1) % files.length;
+          render();
+        }
+
+        btnPrev.addEventListener("click", prev);
+        btnNext.addEventListener("click", next);
+
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") prev();
+          if (e.key === "ArrowRight") next();
+        });
+
+        render();
+      }
+
+      document.querySelectorAll("[data-carousel]").forEach(initCarousel);
+    </script>
   </body>
-  </html>
+</html>
