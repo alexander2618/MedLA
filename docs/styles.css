@@ -42,3 +42,65 @@ code{color:#e6f7ff}
   .nav{display:none}
   .hero{padding-top:44px}
 }
+/* ===== HTML Gallery Carousel ===== */
+.carousel {
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  gap: 12px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.carousel-window {
+  width: 100%;
+  height: min(70vh, 720px);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+
+.carousel-iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.carousel-btn {
+  height: 44px;
+  width: 44px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--panel);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.carousel-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.carousel-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--muted);
+}
+
+.carousel-open {
+  color: inherit;
+  text-decoration: underline;
+}
+
+@media (max-width: 720px) {
+  .carousel {
+    grid-template-columns: 40px 1fr 40px;
+  }
+  .carousel-window {
+    height: min(65vh, 560px);
+  }
+}
