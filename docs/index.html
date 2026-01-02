@@ -4,11 +4,17 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>MedLA | Multi-Agent Medical Reasoning</title>
-    <meta name="description" content="MedLA: A multi-agent framework for knowledge-intensive medical and biomedical question answering (AAAI 2026 Oral).">
+    <meta
+      name="description"
+      content="MedLA: A multi-agent framework for knowledge-intensive medical and biomedical question answering (AAAI 2026 Oral)."
+    >
     <link rel="canonical" href="./" />
     <link rel="alternate" href="./zh/" hreflang="zh" />
     <meta property="og:title" content="MedLA | Multi-Agent Medical Reasoning" />
-    <meta property="og:description" content="A scalable agent architecture combining logical critique, elimination, and arbitration to improve reliability on difficult clinical and biomedical questions." />
+    <meta
+      property="og:description"
+      content="A scalable agent architecture combining logical critique, elimination, and arbitration to improve reliability on difficult clinical and biomedical questions."
+    />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="./assets/logo.svg" />
     <meta name="twitter:card" content="summary_large_image" />
@@ -30,6 +36,7 @@
           <a href="#args">Args</a>
           <a href="#arch">Architecture</a>
           <a href="#results">Results</a>
+          <a href="#html-gallery">HTML Gallery</a>
           <a href="#citation">Citation</a>
           <a href="#deploy">Deploy</a>
         </nav>
@@ -40,13 +47,23 @@
       <section id="overview" class="hero">
         <div class="container">
           <h1>MedLA: A Multi-Agent Framework for Knowledge-Intensive Medical Reasoning</h1>
-          <p class="subtitle">A scalable agent architecture for MedQA, PubMedQA, MMLU medical subsets, MedDdx, BioASQ-style tasks, and knowledge-grounded cases.</p>
+          <p class="subtitle">
+            A scalable agent architecture for MedQA, PubMedQA, MMLU medical subsets, MedDdx, BioASQ-style
+            tasks, and knowledge-grounded cases.
+          </p>
           <div class="cta">
-            <a class="btn primary" href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn primary" href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener"
+              >GitHub</a
+            >
             <a class="btn" href="#usage">Quickstart</a>
           </div>
-          <p class="note">Core idea: independent specialized agents + LogicAgent critique + DecisionMakersAgent arbitration → robust final answers.</p>
-          <p class="note"><a href="./zh/" style="color:inherit;text-decoration:underline">中文页面 (Chinese)</a></p>
+          <p class="note">
+            Core idea: independent specialized agents + LogicAgent critique + DecisionMakersAgent arbitration → robust
+            final answers.
+          </p>
+          <p class="note">
+            <a href="./zh/" style="color: inherit; text-decoration: underline">中文页面 (Chinese)</a>
+          </p>
         </div>
       </section>
 
@@ -55,10 +72,14 @@
           <h2>Key Features</h2>
           <ul class="grid two">
             <li><b>Configurable debates</b>: control <code>--num_agents</code> and <code>--num_rounds</code>.</li>
-            <li><b>Logic layer</b>: <code>LogicAgent</code> synthesizes structured logic reports and flags inconsistencies.</li>
+            <li>
+              <b>Logic layer</b>: <code>LogicAgent</code> synthesizes structured logic reports and flags inconsistencies.
+            </li>
             <li><b>Arbitration</b>: <code>DecisionMakersAgent</code> consolidates candidates when consensus fails.</li>
             <li><b>Baseline mode</b>: <code>--baseline_bool 1</code> for single-agent direct answering.</li>
-            <li><b>Multi-dataset</b>: <code>medqa / medxpert / mmlu / pubmedqa / bioasq / medddx</code>.</li>
+            <li>
+              <b>Multi-dataset</b>: <code>medqa / medxpert / mmlu / pubmedqa / bioasq / medddx</code>.
+            </li>
             <li><b>Pluggable backends</b>: OpenAI, DeepSeek, vLLM, ZhipuAI, SiliconFlow, etc.</li>
             <li><b>Experiment tracking</b>: Weights & Biases metrics and diagnostics.</li>
             <li><b>Threaded execution</b>: service configuration via environment variables.</li>
@@ -135,10 +156,25 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
           <h3>Debug quick run</h3>
           <pre class="code"><code class="language-bash">python main.py --dataset medqa --debug
           </code></pre>
-          <p class="note">Selected sweep configs: 
-            <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">sweep/</a> ·
-            <a href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_llama.yaml" target="_blank" rel="noopener">test_llama.yaml</a> ·
-            <a href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_r1_baseline.yaml" target="_blank" rel="noopener">test_r1_baseline.yaml</a>
+          <p class="note">
+            Selected sweep configs:
+            <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener"
+              >sweep/</a
+            >
+            ·
+            <a
+              href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_llama.yaml"
+              target="_blank"
+              rel="noopener"
+              >test_llama.yaml</a
+            >
+            ·
+            <a
+              href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_r1_baseline.yaml"
+              target="_blank"
+              rel="noopener"
+              >test_r1_baseline.yaml</a
+            >
           </p>
         </div>
       </section>
@@ -180,21 +216,29 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
             <li>Metrics persisted and visualized via WandB.</li>
           </ol>
           <div class="cards">
-            <div class="card"><b>LogicAgent</b><br />logical critique & coherence</div>
+            <div class="card"><b>LogicAgent</b><br />logical critique &amp; coherence</div>
             <div class="card"><b>MedAgent_Eliminate</b><br />medical reasoning + self-elimination</div>
-            <div class="card"><b>DecisionMakersAgent</b><br />arbitration & synthesis</div>
-            <div class="card"><b>base (util/base.py)</b><br />data orchestration & pipeline</div>
+            <div class="card"><b>DecisionMakersAgent</b><br />arbitration &amp; synthesis</div>
+            <div class="card"><b>base (util/base.py)</b><br />data orchestration &amp; pipeline</div>
           </div>
-          <div class="diagram" style="margin-top:18px">
-            <img src="./assets/arch.svg" alt="MedLA Architecture Diagram" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:12px" />
+          <div class="diagram" style="margin-top: 18px">
+            <img
+              src="./assets/arch.svg"
+              alt="MedLA Architecture Diagram"
+              style="max-width: 100%; height: auto; border: 1px solid var(--border); border-radius: 12px"
+            />
           </div>
         </div>
       </section>
 
       <section id="results" class="section alt">
         <div class="container">
-          <h2>Results & Analysis</h2>
-          <p>JSONL outputs and diagnostics live in <code>output/</code>, <code>logic_output/</code>, and <code>logic_extrac/</code>. Use <code>adam_baseline/analysis.py</code> for accuracy curves, depth distributions, and comparative evaluation.</p>
+          <h2>Results &amp; Analysis</h2>
+          <p>
+            JSONL outputs and diagnostics live in <code>output/</code>, <code>logic_output/</code>, and
+            <code>logic_extrac/</code>. Use <code>adam_baseline/analysis.py</code> for accuracy curves, depth
+            distributions, and comparative evaluation.
+          </p>
           <h3>WandB Metrics</h3>
           <ul class="grid two">
             <li><b>accuracy</b>: cumulative accuracy</li>
@@ -203,6 +247,29 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
             <li><b>make_decision / make_decision_num</b>: arbitration flags and proportion</li>
             <li><b>num_right / numn_total</b>: correct / total counts</li>
           </ul>
+        </div>
+      </section>
+
+      <!-- Inserted chapter: iframe carousel -->
+      <section id="html-gallery" class="section">
+        <div class="container">
+          <h2>HTML Gallery</h2>
+          <p class="note">Browse all HTML examples in <code>docs/html/html/</code> using a carousel.</p>
+
+          <div class="carousel" data-carousel data-base="./html/html/" data-manifest="./html/html/samples.json">
+            <button class="carousel-btn" type="button" data-prev aria-label="Previous page">←</button>
+
+            <div class="carousel-window">
+              <iframe class="carousel-iframe" data-frame title="HTML sample viewer" loading="lazy"></iframe>
+            </div>
+
+            <button class="carousel-btn" type="button" data-next aria-label="Next page">→</button>
+          </div>
+
+          <div class="carousel-meta">
+            <span class="carousel-counter" data-counter></span>
+            <a class="carousel-open" data-open target="_blank" rel="noopener">Open in new tab</a>
+          </div>
         </div>
       </section>
 
@@ -224,8 +291,15 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
         <div class="container">
           <h2>More</h2>
           <ul>
-            <li><a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub repository</a></li>
-            <li>Datasets under <code>data/</code>; sweep configs in <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">sweep/</a>.</li>
+            <li>
+              <a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub repository</a>
+            </li>
+            <li>
+              Datasets under <code>data/</code>; sweep configs in
+              <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener"
+                >sweep/</a
+              >.
+            </li>
             <li>Contributions welcome via Issues and PRs.</li>
           </ul>
         </div>
@@ -254,5 +328,61 @@ python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_t
         <a href="./zh/" rel="alternate" hreflang="zh">中文</a>
       </div>
     </footer>
+
+    <script>
+      async function initCarousel(root) {
+        const base = root.getAttribute("data-base");
+        const manifestUrl = root.getAttribute("data-manifest");
+
+        const frame = root.querySelector("[data-frame]");
+        const btnPrev = root.querySelector("[data-prev]");
+        const btnNext = root.querySelector("[data-next]");
+
+        const container = root.closest(".container");
+        const counter = container?.querySelector("[data-counter]");
+        const openLink = container?.querySelector("[data-open]");
+
+        let files = [];
+        try {
+          const res = await fetch(manifestUrl, { cache: "no-store" });
+          files = await res.json();
+        } catch (e) {
+          console.error("Failed to load carousel manifest:", manifestUrl, e);
+          return;
+        }
+        if (!Array.isArray(files) || files.length === 0) return;
+
+        let idx = 0;
+        function render() {
+          const filename = files[idx];
+          const src = base + filename;
+          frame.src = src;
+          if (counter) counter.textContent = `${idx + 1} / ${files.length} — ${filename}`;
+          if (openLink) openLink.href = src;
+          btnPrev.disabled = files.length <= 1;
+          btnNext.disabled = files.length <= 1;
+        }
+        function prev() {
+          idx = (idx - 1 + files.length) % files.length;
+          render();
+        }
+        function next() {
+          idx = (idx + 1) % files.length;
+          render();
+        }
+
+        btnPrev.addEventListener("click", prev);
+        btnNext.addEventListener("click", next);
+
+        window.addEventListener("keydown", (e) => {
+          if (e.key === "ArrowLeft") prev();
+          if (e.key === "ArrowRight") next();
+        });
+
+        render();
+      }
+
+      document.querySelectorAll("[data-carousel]").forEach(initCarousel);
+    </script>
   </body>
-  </html>
+</html>
