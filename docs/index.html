@@ -1,135 +1,258 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MedLA</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-<nav>
-    <a href="#about">About</a>
-    <a href="#results">Results</a>
-    <a href="#html-gallery">HTML Gallery</a>
-</nav>
-
-<main>
-    <section id="about">
-        <h1>MedLA</h1>
-        <p>Medical Landmark Annotation</p>
-    </section>
-
-    <section id="results">
-        <h2>Results</h2>
-        <p>...</p>
-    </section>
-
-    <!-- HTML Samples Carousel -->
-    <section id="html-gallery" class="html-gallery">
-        <h2>HTML Gallery</h2>
-        <p class="html-gallery__hint">Browse interactive HTML samples.</p>
-
-        <div class="html-carousel" data-samples-json="html/html/samples.json">
-            <div class="html-carousel__controls">
-                <button type="button" class="html-carousel__btn" data-action="prev" aria-label="Previous sample">‹</button>
-                <div class="html-carousel__meta">
-                    <span class="html-carousel__title" data-role="title">Loading…</span>
-                    <span class="html-carousel__counter" data-role="counter"></span>
-                </div>
-                <button type="button" class="html-carousel__btn" data-action="next" aria-label="Next sample">›</button>
-            </div>
-
-            <div class="html-carousel__frameWrap">
-                <iframe class="html-carousel__frame" data-role="frame" title="HTML sample" loading="lazy" referrerpolicy="no-referrer"></iframe>
-            </div>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MedLA | Multi-Agent Medical Reasoning</title>
+    <meta name="description" content="MedLA: A multi-agent framework for knowledge-intensive medical and biomedical question answering (AAAI 2026 Oral).">
+    <link rel="canonical" href="./" />
+    <link rel="alternate" href="./zh/" hreflang="zh" />
+    <meta property="og:title" content="MedLA | Multi-Agent Medical Reasoning" />
+    <meta property="og:description" content="A scalable agent architecture combining logical critique, elimination, and arbitration to improve reliability on difficult clinical and biomedical questions." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="./assets/logo.svg" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="container">
+        <div class="brand">
+          <img src="./assets/logo.svg" alt="MedLA" height="20" />
+          <span class="tag">AAAI 2026 Oral</span>
         </div>
+        <nav class="nav">
+          <a href="#overview">Overview</a>
+          <a href="#features">Features</a>
+          <a href="#install">Install</a>
+          <a href="#usage">Usage</a>
+          <a href="#args">Args</a>
+          <a href="#arch">Architecture</a>
+          <a href="#results">Results</a>
+          <a href="#citation">Citation</a>
+          <a href="#deploy">Deploy</a>
+        </nav>
+      </div>
+    </header>
 
-        <noscript>
-            <p>This section requires JavaScript to load the sample list.</p>
-        </noscript>
-    </section>
-</main>
+    <main>
+      <section id="overview" class="hero">
+        <div class="container">
+          <h1>MedLA: A Multi-Agent Framework for Knowledge-Intensive Medical Reasoning</h1>
+          <p class="subtitle">A scalable agent architecture for MedQA, PubMedQA, MMLU medical subsets, MedDdx, BioASQ-style tasks, and knowledge-grounded cases.</p>
+          <div class="cta">
+            <a class="btn primary" href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub</a>
+            <a class="btn" href="#usage">Quickstart</a>
+          </div>
+          <p class="note">Core idea: independent specialized agents + LogicAgent critique + DecisionMakersAgent arbitration → robust final answers.</p>
+          <p class="note"><a href="./zh/" style="color:inherit;text-decoration:underline">中文页面 (Chinese)</a></p>
+        </div>
+      </section>
 
-<script>
-(function () {
-  function qs(root, sel) { return root.querySelector(sel); }
+      <section id="features" class="section">
+        <div class="container">
+          <h2>Key Features</h2>
+          <ul class="grid two">
+            <li><b>Configurable debates</b>: control <code>--num_agents</code> and <code>--num_rounds</code>.</li>
+            <li><b>Logic layer</b>: <code>LogicAgent</code> synthesizes structured logic reports and flags inconsistencies.</li>
+            <li><b>Arbitration</b>: <code>DecisionMakersAgent</code> consolidates candidates when consensus fails.</li>
+            <li><b>Baseline mode</b>: <code>--baseline_bool 1</code> for single-agent direct answering.</li>
+            <li><b>Multi-dataset</b>: <code>medqa / medxpert / mmlu / pubmedqa / bioasq / medddx</code>.</li>
+            <li><b>Pluggable backends</b>: OpenAI, DeepSeek, vLLM, ZhipuAI, SiliconFlow, etc.</li>
+            <li><b>Experiment tracking</b>: Weights & Biases metrics and diagnostics.</li>
+            <li><b>Threaded execution</b>: service configuration via environment variables.</li>
+          </ul>
+        </div>
+      </section>
 
-  async function initHtmlCarousel(carouselEl) {
-    const jsonPath = carouselEl.getAttribute('data-samples-json');
-    const titleEl = qs(carouselEl, '[data-role="title"]');
-    const counterEl = qs(carouselEl, '[data-role="counter"]');
-    const frameEl = qs(carouselEl, '[data-role="frame"]');
-    const prevBtn = qs(carouselEl, '[data-action="prev"]');
-    const nextBtn = qs(carouselEl, '[data-action="next"]');
+      <section id="layout" class="section alt">
+        <div class="container">
+          <h2>Repository Layout</h2>
+          <pre class="code"><code>adam_baseline/              # classic single-agent baselines & analysis
+adama_main_new_prompt/     # main multi-agent experimental pipeline
+  main.py                  # entry point (baseline + multi-agent)
+  util/                    # agents / prompts / orchestration
+  sweep/                   # YAML configs for parameter sweeps
+  data/                    # datasets & knowledge stores
+adama_main_publish/        # slimmed release (this project)
+docs/                      # project page (what you're viewing)
+output/, logic_output/, logic_extrac/  # run artifacts & diagnostics
+          </code></pre>
+        </div>
+      </section>
 
-    let samples = [];
-    let idx = 0;
+      <section id="install" class="section">
+        <div class="container">
+          <h2>Installation</h2>
+          <pre class="code"><code class="language-bash">git clone https://github.com/alexander2618/MedLA.git MedLA
+cd MedLA
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+# For full reproducibility:
+pip install -r requirements_environment.txt
 
-    function normalizeItem(item) {
-      if (typeof item === 'string') return { title: item, src: item };
-      if (item && typeof item === 'object') {
-        return {
-          title: item.title || item.name || item.src || 'Untitled',
-          src: item.src || item.path || item.url || ''
-        };
-      }
-      return { title: 'Untitled', src: '' };
-    }
+# Optional: local/service backends
+export ADAMA_PORT=8000        # vLLM HTTP port
+export ADAMA_NUM_THREADS=8    # override --num_threads
+          </code></pre>
+        </div>
+      </section>
 
-    function setDisabled(btn, disabled) {
-      btn.disabled = !!disabled;
-      btn.setAttribute('aria-disabled', disabled ? 'true' : 'false');
-    }
+      <section id="data" class="section alt">
+        <div class="container">
+          <h2>Data Preparation</h2>
+          <ol>
+            <li>Place files under <code>data/&lt;new_dataset&gt;/</code>.</li>
+            <li>Extend <code>--dataset</code> choices in <code>get_args()</code> within <code>main.py</code>.</li>
+            <li>Add loader logic in <code>util/base.py</code> (parsing and normalization).</li>
+          </ol>
+        </div>
+      </section>
 
-    function render() {
-      if (!samples.length) {
-        titleEl.textContent = 'No samples found.';
-        counterEl.textContent = '';
-        frameEl.removeAttribute('src');
-        setDisabled(prevBtn, true);
-        setDisabled(nextBtn, true);
-        return;
-      }
+      <section id="usage" class="section">
+        <div class="container">
+          <h2>Usage</h2>
+          <h3>Multi-agent collaboration</h3>
+          <pre class="code"><code class="language-bash">python main.py \
+  --dataset medqa \
+  --model deepseek \
+  --llm_name deepseek-chat \
+  --num_agents 8 \
+  --num_rounds 3 \
+  --few_shots 1 \
+  --tag exp_medqa_v1
+          </code></pre>
+          <h3>Single-agent baseline</h3>
+          <pre class="code"><code class="language-bash">python main.py --dataset medqa --model deepseek --llm_name deepseek-chat \
+  --baseline_bool 1 --tag baseline_v1
+          </code></pre>
+          <h3>vLLM backend</h3>
+          <pre class="code"><code class="language-bash">export ADAMA_PORT=8000
+python main.py --dataset mmlu --model vllm --llm_name llama3.3_4096 --tag vllm_test
+          </code></pre>
+          <h3>Debug quick run</h3>
+          <pre class="code"><code class="language-bash">python main.py --dataset medqa --debug
+          </code></pre>
+          <p class="note">Selected sweep configs: 
+            <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">sweep/</a> ·
+            <a href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_llama.yaml" target="_blank" rel="noopener">test_llama.yaml</a> ·
+            <a href="https://github.com/alexander2618/MedLA/blob/main/adama_main_publish/sweep/test_r1_baseline.yaml" target="_blank" rel="noopener">test_r1_baseline.yaml</a>
+          </p>
+        </div>
+      </section>
 
-      idx = (idx + samples.length) % samples.length;
-      const s = samples[idx];
-      titleEl.textContent = s.title || 'Untitled';
-      counterEl.textContent = (idx + 1) + ' / ' + samples.length;
-      if (s.src) frameEl.src = s.src;
-      setDisabled(prevBtn, samples.length <= 1);
-      setDisabled(nextBtn, samples.length <= 1);
-    }
+      <section id="args" class="section alt">
+        <div class="container">
+          <h2>Main Arguments (main.py)</h2>
+          <div class="cols two">
+            <ul>
+              <li><code>--dataset</code>: dataset id</li>
+              <li><code>--model</code>: backend (deepseek/openai/vllm/siliconflow/zhipuai...)</li>
+              <li><code>--llm_name</code>: concrete model name</li>
+              <li><code>--num_agents</code>: number of agents</li>
+              <li><code>--num_rounds</code>: debate iterations</li>
+              <li><code>--few_shots</code>: number of in-context exemplars</li>
+            </ul>
+            <ul>
+              <li><code>--baseline_bool</code>: 1=baseline, 0=multi-agent</li>
+              <li><code>--num_samples</code>: limit (-1=all)</li>
+              <li><code>--num_threads</code>: parallelism</li>
+              <li><code>--temp</code>: sampling temperature</li>
+              <li><code>--tag</code>: run label</li>
+              <li><code>--debug</code>: lightweight run</li>
+            </ul>
+          </div>
+          <p class="note">Env vars: <code>ADAMA_PORT</code> (vLLM port), <code>ADAMA_NUM_THREADS</code> (override threads).</p>
+        </div>
+      </section>
 
-    function onPrev() { idx -= 1; render(); }
-    function onNext() { idx += 1; render(); }
+      <section id="arch" class="section">
+        <div class="container">
+          <h2>Architecture Overview</h2>
+          <ol>
+            <li>Instantiate <b>LogicAgent</b> and N <b>MedAgent_Eliminate</b> instances.</li>
+            <li>Agents independently produce (answer, reasoning).</li>
+            <li><b>LogicAgent</b> evaluates consistency → structured <code>logic_report</code>.</li>
+            <li>If disagreement persists, run elimination/refinement cycles.</li>
+            <li>Remaining conflict → <b>DecisionMakersAgent</b> consolidates and selects.</li>
+            <li>Metrics persisted and visualized via WandB.</li>
+          </ol>
+          <div class="cards">
+            <div class="card"><b>LogicAgent</b><br />logical critique & coherence</div>
+            <div class="card"><b>MedAgent_Eliminate</b><br />medical reasoning + self-elimination</div>
+            <div class="card"><b>DecisionMakersAgent</b><br />arbitration & synthesis</div>
+            <div class="card"><b>base (util/base.py)</b><br />data orchestration & pipeline</div>
+          </div>
+          <div class="diagram" style="margin-top:18px">
+            <img src="./assets/arch.svg" alt="MedLA Architecture Diagram" style="max-width:100%;height:auto;border:1px solid var(--border);border-radius:12px" />
+          </div>
+        </div>
+      </section>
 
-    prevBtn.addEventListener('click', onPrev);
-    nextBtn.addEventListener('click', onNext);
+      <section id="results" class="section alt">
+        <div class="container">
+          <h2>Results & Analysis</h2>
+          <p>JSONL outputs and diagnostics live in <code>output/</code>, <code>logic_output/</code>, and <code>logic_extrac/</code>. Use <code>adam_baseline/analysis.py</code> for accuracy curves, depth distributions, and comparative evaluation.</p>
+          <h3>WandB Metrics</h3>
+          <ul class="grid two">
+            <li><b>accuracy</b>: cumulative accuracy</li>
+            <li><b>talkTimes</b>: debate rounds per item</li>
+            <li><b>retry_count / retry_pro</b>: backend/parse retries</li>
+            <li><b>make_decision / make_decision_num</b>: arbitration flags and proportion</li>
+            <li><b>num_right / numn_total</b>: correct / total counts</li>
+          </ul>
+        </div>
+      </section>
 
-    // keyboard support when focused in the carousel region
-    carouselEl.addEventListener('keydown', function (e) {
-      if (e.key === 'ArrowLeft') { e.preventDefault(); onPrev(); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); onNext(); }
-    });
+      <section id="citation" class="section">
+        <div class="container">
+          <h2>Citation</h2>
+          <pre class="code"><code>@inproceedings{AdamaAAAI2026,
+  title={MedLA: ALogic-Driven Multi-Agent Framework for Complex Medical Reasoning with Large Language Models},
+  author={Siqi Ma, Jiajie Huang, Fan Zhang, Jinlin Wu, Yue Shen, Guohui Fan, Zhu Zhang, Zelin Zang},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  year={2026},
+  note={Oral Presentation}
+}
+          </code></pre>
+        </div>
+      </section>
 
-    try {
-      const res = await fetch(jsonPath, { cache: 'no-cache' });
-      if (!res.ok) throw new Error('Failed to load ' + jsonPath);
-      const data = await res.json();
-      const list = Array.isArray(data) ? data : (Array.isArray(data.samples) ? data.samples : []);
-      samples = list.map(normalizeItem).filter(x => x.src);
-      render();
-    } catch (err) {
-      titleEl.textContent = 'Failed to load samples.';
-      counterEl.textContent = '';
-      console.error(err);
-    }
-  }
+      <section id="links" class="section alt">
+        <div class="container">
+          <h2>More</h2>
+          <ul>
+            <li><a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub repository</a></li>
+            <li>Datasets under <code>data/</code>; sweep configs in <a href="https://github.com/alexander2618/MedLA/tree/main/adama_main_publish/sweep" target="_blank" rel="noopener">sweep/</a>.</li>
+            <li>Contributions welcome via Issues and PRs.</li>
+          </ul>
+        </div>
+      </section>
 
-  document.addEventListener('DOMContentLoaded', function () {
-    document.querySelectorAll('.html-carousel[data-samples-json]').forEach(initHtmlCarousel);
-  });
-})();
-</script>
-</body>
-</html>
+      <section id="deploy" class="section">
+        <div class="container">
+          <h2>Deploy on GitHub Pages</h2>
+          <ol>
+            <li>Push the repository to GitHub.</li>
+            <li>Open Settings → Pages.</li>
+            <li>Set Source to branch <code>main</code> and folder <code>/docs</code>, then save.</li>
+            <li>Wait a few minutes and open the provided Pages URL.</li>
+          </ol>
+          <p class="note">This site is already placed under <code>docs/</code> and is Pages-ready.</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <span>© MedLA Team · AAAI 2026 Oral</span>
+        <span class="sep">·</span>
+        <a href="https://github.com/alexander2618/MedLA" target="_blank" rel="noopener">GitHub</a>
+        <span class="sep">·</span>
+        <a href="./zh/" rel="alternate" hreflang="zh">中文</a>
+      </div>
+    </footer>
+  </body>
+  </html>
