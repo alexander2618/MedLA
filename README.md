@@ -5,7 +5,7 @@
 [![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b.svg)](https://arxiv.org/abs/2509.23725)
 [![Project Page](https://img.shields.io/badge/Project-Page-blue.svg)](https://alexander2618.github.io/MedLA/)
 [![Code](https://img.shields.io/badge/Code-GitHub-green.svg)](https://github.com/alexander2618/MedLA)
-[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)]()
+[![License](https://img.shields.io/badge/License-MIT-lightgrey.svg)](https://github.com/alexander2618/MedLA/tree/main?tab=MIT-1-ov-file)
 
 </div>
 
