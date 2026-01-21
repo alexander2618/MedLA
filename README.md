@@ -13,7 +13,7 @@
 
 <div align="center">
 
-[Siqi Ma]() · [Jiajie Huang]() · [Fan Zhang]() · [Jinlin Wu]() · [Yue Shen]() · [Guohui Fan]() · [Zhu Zhang]() · [Zelin Zang](https://zangzelin.github.io/)
+[Siqi Ma](https://scholar.google.com/citations?user=exolNQoAAAAJ&hl=zh-CN&authuser=1&oi=ao) · [Jiajie Huang]() · [Fan Zhang]() · [Jinlin Wu]() · [Yue Shen]() · [Guohui Fan]() · [Zhu Zhang]() · [Zelin Zang](https://zangzelin.github.io/)
 
 </div>
 
